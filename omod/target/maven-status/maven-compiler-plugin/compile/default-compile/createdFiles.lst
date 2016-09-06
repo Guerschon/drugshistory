@@ -1,0 +1,3 @@
+org\openmrs\module\drugshistory\page\controller\DrugsHistoryPageController.class
+org\openmrs\module\drugshistory\extension\html\AdminList.class
+org\openmrs\module\drugshistory\web\controller\DrugsHistoryManageController.class

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+
+	<!-- Module Properties -->
+	<id>drugshistory</id>
+	<name>Drugs History Module</name>
+	<version>1.0-SNAPSHOT</version>
+	<package>org.openmrs.module.drugshistory</package>
+	<author>Guerschon</author>
+	<description>
+		Drugs history
+	</description>
+	<updateURL>https://modules.openmrs.org/modules/download/drugshistory/update.rdf</updateURL>
+	<require_version>1.11.5</require_version>
+	<!-- / Module Properties -->
+
+	
+	<!-- Required Modules -->
+	<require_modules>
+																											
+		<require_module version="3.4">
+			org.openmrs.module.uiframework
+		</require_module>
+			
+	</require_modules>
+	<!-- / Required Modules -->
+	
+	<!-- Module Activator -->
+	<activator>org.openmrs.module.drugshistory.DrugsHistoryActivator</activator>
+	
+	
+	<!-- Adds link to admin page -->
+	<extension>
+		<point>org.openmrs.admin.list</point>
+		<class>org.openmrs.module.drugshistory.extension.html.AdminList</class>
+	</extension>
+	
+	<!-- Maps hibernate file's, if present -->
+	<mappingFiles>
+				
+		DrugsHistory.hbm.xml
+				
+	</mappingFiles>
+
+	<!-- Internationalization -->
+	<!-- All message codes should start with drugshistory. -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+
+</module>
+

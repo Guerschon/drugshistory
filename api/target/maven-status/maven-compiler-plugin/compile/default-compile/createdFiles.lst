@@ -1,0 +1,6 @@
+org\openmrs\module\drugshistory\DrugsHistoryActivator.class
+org\openmrs\module\drugshistory\api\DrugsHistoryService.class
+org\openmrs\module\drugshistory\api\db\hibernate\HibernateDrugsHistoryDAO.class
+org\openmrs\module\drugshistory\api\db\DrugsHistoryDAO.class
+org\openmrs\module\drugshistory\DrugsHistory.class
+org\openmrs\module\drugshistory\api\impl\DrugsHistoryServiceImpl.class
