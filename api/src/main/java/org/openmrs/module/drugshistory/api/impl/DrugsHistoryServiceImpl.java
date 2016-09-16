@@ -14,11 +14,16 @@
 package org.openmrs.module.drugshistory.api.impl;
 
 import org.openmrs.Concept;
+import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,17 +60,62 @@ public class DrugsHistoryServiceImpl extends BaseOpenmrsService implements Drugs
 		// DRUGS DISPENSED = 1282
 		List<Obs> drugsHistory = new ArrayList<Obs>();
 		Integer drugsConceptId = 1282;
+		Integer dateDrugsConceptId=1276;
 		Concept drugsDispensed = Context.getConceptService().getConcept(drugsConceptId);
+		Concept dateDispensed = Context.getConceptService().getConcept(dateDrugsConceptId);
+		List<Concept> conceptList = new ArrayList<Concept>();
+		List<Encounter> encounterList = new ArrayList<Encounter>();
 
-		for (Obs obs : Context.getObsService().getObservations(patient, drugsDispensed, false)) {
-			if (obs != null) {		
-				
+		for (Obs obs0 : Context.getObsService().getObservations(patient, drugsDispensed, false)) {
+			Obs obs=Obs.newInstance(obs0);
+			if (obs0 != null) {	
+				for (Obs obs1 : Context.getObsService().getObservations(patient, dateDispensed, false)) {
+					if (obs1 != null) {
+						if(obs0.getObsGroupId()==obs1.getObsGroupId()){
+							//je capture dans obs la date de dispensation du medicament
+							obs.setObsDatetime(obs1.getObsDatetime());
+							conceptList.add(obs0.getValueCoded());
+							encounterList.add(obs0.getEncounter());
+							//j'ajoute la date de dispensation
+							drugsHistory.add(obs);
+						}
+						else if(conceptList.contains(obs0.getValueCoded()) && encounterList.contains(obs0.getEncounter()));
+						else
+						{
+							conceptList.add(obs0.getValueCoded());
+							encounterList.add(obs0.getEncounter());
+							//j'ajoute la date de prescription si la date de dispensation n'est pas disponible
+							drugsHistory.add(obs);
+							
+						} 
+						
+						} 
+					/*else {
+						DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+						Date d=new Date();
+						try {
+							d = df.parse("0001-01-01 00:00:00");
+							
+							} catch (final ParseException e) {
+							
+							e.printStackTrace();
+							
+							}
+						obs.setObsDatetime(d);
+						drugsHistory.add(obs);
+						}*/
 					
-					drugsHistory.add(obs);
+					
+				} 
+			/*if(!conceptList.contains(obs0.getValueCoded())) {
+				conceptList.add(obs0.getValueCoded());
+				drugsHistory.add(obs);
 				
+			} else;*/
+				
+			} 
 				
 			}
-		}
 		return drugsHistory;
-	}
+		}
 }
